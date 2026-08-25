@@ -1,289 +1,240 @@
-# Sysinfo Shell
-
 <div align="center">
 
 # `Sysinfo Shell`
 
-### Lightweight Cross-Platform System Information Tool
+### 🔍 Informações do sistema. Um único comando.
 
-**A simple, portable and dependency-conscious system information utility written entirely in POSIX Shell.**
+**Uma ferramenta leve, portátil e independente de dependências para obter informações essenciais do sistema diretamente pelo terminal.**
 
-[![Shell](https://img.shields.io/badge/Shell-POSIX%20sh-4EAA25?style=for-the-badge\&logo=gnu-bash\&logoColor=white)](https://www.gnu.org/software/bash/)
-[![Linux](https://img.shields.io/badge/Linux-Supported-FCC624?style=for-the-badge\&logo=linux\&logoColor=black)](https://www.kernel.org/)
-[![Windows](https://img.shields.io/badge/Windows-Supported-0078D4?style=for-the-badge\&logo=windows\&logoColor=white)](https://www.microsoft.com/windows)
-[![WSL](https://img.shields.io/badge/WSL-Supported-0D1117?style=for-the-badge\&logo=linux\&logoColor=white)](https://learn.microsoft.com/windows/wsl/)
-[![License](https://img.shields.io/badge/License-Open%20Source-blue?style=for-the-badge)](#license)
+<br>
+
+[![POSIX Shell](https://img.shields.io/badge/POSIX-Shell-111827?style=for-the-badge\&logo=gnu-bash\&logoColor=white)](https://pubs.opengroup.org/onlinepubs/9699919799/)
+[![Linux](https://img.shields.io/badge/Linux-Support-111827?style=for-the-badge\&logo=linux\&logoColor=FCC624)](https://www.kernel.org/)
+[![Windows](https://img.shields.io/badge/Windows-Support-111827?style=for-the-badge\&logo=windows\&logoColor=00A4EF)](https://www.microsoft.com/windows)
+[![WSL](https://img.shields.io/badge/WSL-Support-111827?style=for-the-badge\&logo=linux\&logoColor=white)](https://learn.microsoft.com/windows/wsl/)
+[![License](https://img.shields.io/badge/License-Open%20Source-111827?style=for-the-badge)](#-licença)
+
+<br>
+
+**Linux · Windows · WSL · Git Bash · MSYS2**
 
 </div>
 
 ---
 
-## Overview
+## ⚡ Visão geral
 
-**Sysinfo Shell** is a lightweight command-line utility designed to provide a quick overview of the most important information about the machine where it is executed.
+**Sysinfo Shell** é uma ferramenta de linha de comando desenvolvida em **POSIX Shell** para apresentar, de forma rápida e organizada, informações essenciais sobre o ambiente onde está sendo executada.
 
-Instead of manually running several commands such as `uname`, `hostname`, `df`, `ip`, `free`, `uptime`, and other system utilities, Sysinfo Shell gathers the available information and presents it in a single, clean terminal interface.
+A ideia é simples:
 
-The project is intentionally implemented using **POSIX Shell (`/bin/sh`)**, avoiding Bash-specific features and unnecessary dependencies.
+> **Em vez de executar vários comandos diferentes para descobrir informações do sistema, execute apenas um.**
 
-The current implementation is designed to work with:
+```sh
+./sysinfo.sh
+```
 
-* Linux
-* Windows through Git Bash
-* Windows through MSYS2
-* Windows through compatible MSYS/MINGW environments
-* Windows through WSL
+O programa detecta automaticamente o ambiente e utiliza diferentes estratégias de coleta conforme a plataforma.
 
-The script automatically detects the environment and selects the appropriate collection strategy for the detected operating system.
+Entre as informações coletadas estão:
+
+* 🖥️ Sistema operacional
+* 📦 Versão do sistema
+* 🏷️ Hostname
+* 👤 Usuário atual
+* ⚙️ Kernel
+* 🧬 Arquitetura
+* 🔥 CPU
+* 🧠 Núcleos
+* 💾 Memória RAM
+* 💿 Armazenamento
+* 🌐 IP local
+* 🌍 IP público
+* ⏱️ Uptime
+* 🕐 Data e hora
 
 ---
 
-## Why Sysinfo Shell?
+# ✦ Por que Sysinfo Shell?
 
-System information is often the first thing needed when troubleshooting a machine, documenting an environment, checking a development workstation, or quickly identifying the characteristics of a remote system.
+No dia a dia, descobrir informações básicas de uma máquina normalmente exige vários comandos:
 
-Without a tool like this, a user may need to execute multiple commands:
-
-```text
+```sh
 uname -a
 hostname
 whoami
-free -h
 df -h
+free -h
 ip addr
 uptime
 date
 ```
 
-Sysinfo Shell consolidates these checks into one execution:
+O Sysinfo Shell transforma isso em uma única experiência:
 
 ```sh
 ./sysinfo.sh
 ```
 
-The result is a compact system overview designed to be immediately readable.
+O objetivo não é substituir ferramentas avançadas de monitoramento.
+
+O objetivo é oferecer uma **fotografia rápida do sistema**.
 
 ---
 
-## Features
+# 🎯 Filosofia
 
-### System Information
+O projeto segue quatro princípios:
 
-The tool collects and displays:
+| Princípio         | Objetivo                                     |
+| ----------------- | -------------------------------------------- |
+| **Simplicidade**  | Fazer uma coisa e fazer bem                  |
+| **Portabilidade** | Funcionar em diferentes ambientes            |
+| **Resiliência**   | Ter alternativas quando comandos não existem |
+| **Legibilidade**  | Mostrar informações de forma clara           |
 
-* Operating system
-* Operating system version
-* Hostname
-* Current user
-* Kernel version
-* System architecture
-* CPU model
-* CPU logical cores
-* RAM usage
-* Disk usage
-* Local IPv4 address
-* Public IPv4 address
-* System uptime
-* Current date and time
+A ferramenta foi construída para ser pequena do ponto de vista operacional, mesmo contendo diversas estratégias internas de fallback.
 
 ---
 
-### Cross-Platform Detection
+# 🖥️ Plataformas
 
-Sysinfo Shell identifies the environment automatically.
+| Plataforma         |                   Status                  |
+| ------------------ | :---------------------------------------: |
+| Linux              |                     ✅                     |
+| Ubuntu             |                     ✅                     |
+| Debian             |                     ✅                     |
+| Fedora             |                     ✅                     |
+| Arch Linux         |                     ✅                     |
+| Kali Linux         |                     ✅                     |
+| WSL                |                     ✅                     |
+| Windows + Git Bash |                     ✅                     |
+| Windows + MSYS2    |                     ✅                     |
+| Windows + Cygwin   | ⚠️ Compatibilidade dependente do ambiente |
 
-The script uses `uname` and platform-specific characteristics to distinguish between:
+> **Observação:** Windows não fornece `/bin/sh` nativamente. Para executar o projeto no Windows é necessário um ambiente Unix-like como Git Bash, MSYS2, Cygwin ou WSL.
+
+---
+
+# ✨ Recursos
+
+## 🖥️ Sistema
+
+Exibe informações como:
 
 ```text
-Linux
-Linux (WSL)
-Windows
-Unknown
+OS
+Version
+Hostname
+User
+Kernel
+Architecture
 ```
-
-For Linux environments, the script also checks whether it is running under WSL.
-
-For Windows environments, it supports shells commonly exposing Windows functionality through:
-
-* MSYS
-* MINGW
-* Cygwin-compatible environments
-
-This allows the same `.sh` file to adapt its behavior instead of requiring completely separate scripts.
 
 ---
 
-## POSIX Shell
+## ⚡ Hardware
 
-One of the project's main technical goals is keeping the implementation portable.
-
-The script begins with:
-
-```sh
-#!/bin/sh
-```
-
-It intentionally avoids Bash-specific constructs such as:
-
-```bash
-[[ ... ]]
-```
-
-Bash arrays:
-
-```bash
-array=(one two three)
-```
-
-and other Bash-only language features.
-
-The implementation instead relies on traditional POSIX Shell constructs such as:
-
-```sh
-case
-if
-for
-while
-functions
-command -v
-```
-
-This makes the script suitable for a much broader range of Unix-like shell environments.
-
----
-
-## Supported Environments
-
-### Linux
-
-Native Linux environments are the primary Unix target.
-
-Typical environments include:
-
-* Ubuntu
-* Debian
-* Fedora
-* Arch Linux
-* Linux Mint
-* Kali Linux
-* Rocky Linux
-* AlmaLinux
-* openSUSE
-* Other Linux distributions providing standard Unix utilities
-
-The script primarily uses standard interfaces such as:
+Informações relacionadas ao processador:
 
 ```text
-/proc
-/etc/os-release
+CPU
+CPU Cores
+Architecture
 ```
 
-when available.
+No Linux, o script utiliza fontes como `/proc/cpuinfo`, `nproc` e `lscpu` quando disponíveis.
+
+No Windows, utiliza mecanismos como `wmic` e variáveis de ambiente.
 
 ---
 
-### Windows
+## 🧠 Memória
 
-Windows does not natively provide a POSIX `/bin/sh` environment.
-
-Therefore, Sysinfo Shell runs on Windows through environments that provide a Unix-compatible shell layer.
-
-Supported approaches include:
-
-#### Git Bash
-
-Git Bash provides a Unix-like shell environment on Windows and is one of the easiest ways to execute the script.
-
-#### MSYS2
-
-MSYS2 provides a Unix-like environment with a POSIX-compatible shell and common command-line utilities.
-
-#### WSL
-
-Windows Subsystem for Linux provides a genuine Linux userspace running on Windows.
-
-In WSL, Sysinfo Shell detects the environment as:
+O sistema apresenta:
 
 ```text
-Linux (WSL)
+RAM : usada / total
+```
+
+No Linux, a coleta utiliza `/proc/meminfo` e possui fallback para `free`.
+
+No Windows, são utilizadas alternativas como `wmic` e `systeminfo`.
+
+---
+
+## 💿 Armazenamento
+
+A ferramenta consulta o armazenamento principal e apresenta:
+
+```text
+Used / Total
+```
+
+Exemplo:
+
+```text
+Disk : 120GiB / 500GiB
+```
+
+No Linux, o mecanismo principal utiliza:
+
+```sh
+df -h
+```
+
+No Windows, o script tenta utilizar `df` e possui fallback através do `wmic`.
+
+---
+
+## 🌐 Rede
+
+O Sysinfo Shell diferencia:
+
+### IP local
+
+Obtido diretamente do ambiente da máquina.
+
+No Linux, existem múltiplos métodos de fallback:
+
+```text
+ip
+hostname -I
+ifconfig
+```
+
+No Windows:
+
+```text
+ipconfig
+wmic
 ```
 
 ---
 
-## Installation
+### 🌍 IP público
 
-Sysinfo Shell does not require a traditional installation process.
+O IP público é obtido através de serviços externos.
 
-Clone the repository:
+O script possui múltiplos endpoints de fallback para aumentar a disponibilidade.
 
-```sh
-git clone https://github.com/excanear/Sysinfo-Shell.git
+Exemplos utilizados:
+
+```text
+ifconfig.me
+icanhazip.com
+api.ipify.org
 ```
 
-Enter the directory:
-
-```sh
-cd Sysinfo-Shell
-```
-
-Then execute:
-
-```sh
-./sysinfo.sh
-```
+> ⚠️ A consulta do IP público requer conexão com a Internet e envia uma requisição para um serviço externo.
 
 ---
 
-## Alternative Execution
+# 🎨 Interface
 
-The script can also be executed explicitly through `sh`:
+O projeto possui uma interface de terminal simples e visualmente organizada.
 
-```sh
-sh sysinfo.sh
-```
-
-This is useful when the executable permission has not been configured.
-
-On Linux, executable permissions can be added with:
-
-```sh
-chmod +x sysinfo.sh
-```
-
-Then:
-
-```sh
-./sysinfo.sh
-```
-
----
-
-# Usage
-
-Sysinfo Shell is intentionally simple.
-
-Run:
-
-```sh
-./sysinfo.sh
-```
-
-No arguments are currently required.
-
-The program automatically:
-
-1. Detects the operating system.
-2. Determines the available information sources.
-3. Collects system information.
-4. Applies platform-specific fallbacks when necessary.
-5. Formats the results.
-6. Displays the final report.
-
----
-
-# Example Output
-
-A typical execution produces an interface similar to:
+Exemplo:
 
 ```text
 ╔══════════════════════════════════════════════╗
@@ -293,7 +244,7 @@ A typical execution produces an interface similar to:
 ║ Version      : Ubuntu 24.04 LTS              ║
 ║ Hostname     : workstation                   ║
 ║ User         : user                           ║
-║ Kernel       : 6.x.x                          ║
+║ Kernel       : 6.8.0                         ║
 ║ Architecture : x86_64                        ║
 ║ CPU          : AMD Ryzen 5                   ║
 ║ Cores        : 12                             ║
@@ -306,486 +257,184 @@ A typical execution produces an interface similar to:
 ╚══════════════════════════════════════════════╝
 ```
 
-Values naturally vary according to the machine and environment.
+A interface utiliza ANSI Colors apenas quando a saída está sendo realizada diretamente em um terminal.
+
+Quando a saída é redirecionada para um arquivo, as cores são desabilitadas.
 
 ---
 
-# Information Collection
+# 🧩 Arquitetura
 
-## Operating System
+Apesar de ser distribuído como um único arquivo, o script foi organizado internamente em funções especializadas.
 
-The operating system is determined using:
+```text
+sysinfo.sh
+│
+├── 🎨 ANSI / Terminal
+│
+├── 🔍 Detecção do ambiente
+│
+├── 🧰 Helpers
+│
+├── 🖥️ Sistema operacional
+│
+├── 🏷️ Hostname
+│
+├── 👤 Usuário
+│
+├── ⚙️ Kernel
+│
+├── 🧬 Arquitetura
+│
+├── 🔥 CPU
+│
+├── 🧠 Núcleos
+│
+├── 💾 RAM
+│
+├── 💿 Disco
+│
+├── 🌐 IP local
+│
+├── 🌍 IP público
+│
+├── ⏱️ Uptime
+│
+├── 🕐 Data/Hora
+│
+└── 🎛️ Renderização
+```
+
+Essa organização facilita futuras extensões sem transformar o projeto em um script monolítico difícil de manter.
+
+---
+
+# 🐚 POSIX Shell
+
+Um dos principais objetivos técnicos do projeto é utilizar **POSIX Shell**, em vez de depender exclusivamente do Bash.
+
+O script inicia com:
+
+```sh
+#!/bin/sh
+```
+
+E evita recursos específicos do Bash, como:
+
+```bash
+[[ ... ]]
+```
+
+arrays Bash:
+
+```bash
+array=(one two three)
+```
+
+e:
+
+```bash
+source file.sh
+```
+
+O projeto prioriza construções portáveis como:
+
+```sh
+if
+case
+for
+while
+command -v
+```
+
+Isso permite que o mesmo código seja utilizado em uma variedade maior de ambientes.
+
+---
+
+# 🔍 Detecção de ambiente
+
+O sistema começa identificando o ambiente através de:
 
 ```sh
 uname -s
 ```
 
-Linux environments are identified through the kernel name.
+A lógica diferencia ambientes como:
 
-Windows environments exposed through MSYS/MINGW/Cygwin are identified through their corresponding `uname` output.
-
-WSL is additionally detected through `/proc/version`.
-
----
-
-## Operating System Version
+```text
+Linux
+Linux (WSL)
+Windows
+Unknown
+```
 
 ### Linux
 
-The script prioritizes:
+Quando `uname` retorna algo iniciado por:
 
 ```text
-/etc/os-release
+Linux
 ```
 
-and reads `PRETTY_NAME` when available.
+o ambiente é tratado como Linux.
 
-Fallbacks include:
+---
+
+### WSL
+
+O script também verifica:
 
 ```text
-lsb_release
-/etc/issue
+/proc/version
 ```
 
-This approach allows the script to continue operating even when a particular distribution utility is unavailable.
+procurando indicadores de Microsoft/WSL.
+
+Quando identificado:
+
+```text
+OS : Linux (WSL)
+```
+
+---
 
 ### Windows
 
-The script attempts multiple sources, including:
+Ambientes:
 
 ```text
-wmic
-systeminfo
-cmd.exe /c ver
+MSYS
+MINGW
+CYGWIN
 ```
 
-depending on what is available in the execution environment.
+são identificados como:
+
+```text
+Windows
+```
+
+Isso permite adaptar a coleta para os comandos disponíveis no ambiente.
 
 ---
 
-## Hostname
+# 🛡️ Sistema de fallback
 
-The hostname is obtained through:
+Um dos pontos mais importantes da implementação é que o script **não presume que todos os comandos estarão instalados**.
 
-```sh
-hostname
-```
-
-If the command is unavailable or returns no usable result, the tool reports:
-
-```text
-N/A
-```
-
----
-
-## Current User
-
-The current user is normally detected through:
-
-```sh
-whoami
-```
-
-with an environment-variable fallback when necessary.
-
----
-
-## Kernel
-
-Kernel information is collected through:
-
-```sh
-uname -r
-```
-
-This is particularly useful for Linux and WSL environments.
-
----
-
-## Architecture
-
-The script uses:
-
-```sh
-uname -m
-```
-
-when available.
-
-Windows-specific environment information can also be used as a fallback.
-
-For example:
-
-```text
-AMD64 → x86_64
-ARM64 → ARM64
-x86   → x86
-```
-
----
-
-# CPU Information
-
-Sysinfo Shell uses platform-specific mechanisms to obtain the processor model.
-
-### Linux
-
-The primary source is:
-
-```text
-/proc/cpuinfo
-```
-
-with `lscpu` used as an additional fallback.
-
-### Windows
-
-The script attempts to use:
-
-```text
-wmic
-```
-
-and can fall back to:
-
-```text
-PROCESSOR_IDENTIFIER
-```
-
-when available.
-
----
-
-# CPU Cores
-
-Linux environments can use:
-
-```sh
-nproc
-```
-
-with `/proc/cpuinfo` as a fallback.
-
-Other available mechanisms may also be used when appropriate.
-
-Windows environments can use:
-
-```text
-NUMBER_OF_PROCESSORS
-```
-
-or `wmic` when available.
-
----
-
-# Memory Information
-
-The tool reports memory in the following general form:
-
-```text
-Used / Total
-```
-
-For example:
-
-```text
-RAM : 5GiB / 16GiB
-```
-
-On Linux, the script reads `/proc/meminfo` and calculates memory usage from the available memory information.
-
-Fallback mechanisms include:
-
-```sh
-free
-```
-
-and additional `/proc/meminfo` parsing.
-
-On Windows, the script attempts Windows-specific mechanisms such as:
-
-```text
-wmic
-systeminfo
-```
-
-when available.
-
----
-
-# Disk Information
-
-Disk usage is obtained through:
-
-```sh
-df -h
-```
-
-The primary filesystem is inspected and displayed in a compact form:
-
-```text
-Used / Total
-```
-
-Example:
-
-```text
-Disk : 120GiB / 500GiB
-```
-
-Windows environments can also use `df` when provided by the shell environment, with additional Windows-specific fallbacks.
-
----
-
-# Local IP Address
-
-Sysinfo Shell attempts to identify the machine's local IPv4 address.
-
-### Linux
-
-Possible sources include:
-
-```text
-ip
-hostname -I
-ifconfig
-```
-
-Loopback addresses such as:
-
-```text
-127.0.0.1
-```
-
-are excluded when possible.
-
-### Windows
-
-The script can use:
-
-```text
-ipconfig
-```
-
-and, where available:
-
-```text
-wmic
-```
-
----
-
-# Public IP Address
-
-The public IP feature requires network access.
-
-The script attempts to query public IP services through:
-
-```text
-curl
-```
-
-or:
-
-```text
-wget
-```
-
-It uses multiple fallback endpoints to improve resilience.
-
-The implementation also performs a basic IPv4-format validation before accepting the result.
-
-If no service is reachable, the output becomes:
-
-```text
-N/A
-```
-
-### Privacy Consideration
-
-The public IP lookup necessarily sends a request to an external service.
-
-If you are running Sysinfo Shell in a sensitive environment where external network requests are undesirable, consider removing or disabling the public IP functionality before execution.
-
----
-
-# Uptime
-
-### Linux
-
-The script attempts:
-
-```sh
-uptime -p
-```
-
-and falls back to:
-
-```sh
-uptime
-```
-
-or `/proc/uptime`.
-
-The output is normalized into a human-readable representation.
-
-Example:
-
-```text
-Uptime : 2 days, 4h 32m
-```
-
-### Windows
-
-Depending on the environment, the script may use:
-
-```text
-uptime
-systeminfo
-wmic
-```
-
-to obtain uptime or boot-time information.
-
----
-
-# Date and Time
-
-The current date and time are obtained through:
-
-```sh
-date "+%Y-%m-%d %H:%M:%S"
-```
-
-Example:
-
-```text
-Date : 2026-08-25 20:30:00
-```
-
----
-
-# Terminal Interface
-
-The output is intentionally designed to be easy to scan.
-
-The script creates a bordered information panel using Unicode box-drawing characters:
-
-```text
-╔══════════════════════════════════════════════╗
-║                 SYSTEM INFO                   ║
-╠══════════════════════════════════════════════╣
-║ OS           : Linux                         ║
-║ Version      : Ubuntu 24.04                  ║
-║ ...                                            ║
-╚══════════════════════════════════════════════╝
-```
-
-The interface uses ANSI colors when standard output is attached to a terminal.
-
-When output is redirected or piped, colors are disabled automatically.
-
-For example:
-
-```sh
-./sysinfo.sh > report.txt
-```
-
-will produce plain text without terminal color escape sequences.
-
----
-
-# Architecture
-
-The script follows a modular internal structure even though the project consists of a single Shell file.
-
-Conceptually, the implementation is organized into:
-
-```text
-sysinfo.sh
-│
-├── Color configuration
-│
-├── Environment detection
-│
-├── Utility helpers
-│
-├── Operating system information
-│
-├── Host information
-│
-├── CPU information
-│
-├── Memory information
-│
-├── Storage information
-│
-├── Network information
-│
-├── Uptime information
-│
-├── Date/time information
-│
-├── Output formatting
-│
-└── Main execution
-```
-
-This makes individual information collectors easier to understand and modify.
-
----
-
-# Internal Functions
-
-The current script contains dedicated functions for the main information categories.
-
-Examples include:
-
-```text
-detect_os()
-get_os_name()
-get_os_version()
-get_hostname()
-get_user()
-get_kernel()
-get_arch()
-get_cpu()
-get_cores()
-get_ram()
-get_disk()
-get_local_ip()
-get_public_ip()
-get_uptime()
-get_date()
-pad_right()
-print_info()
-main()
-```
-
-Each collector is responsible for obtaining a specific category of information.
-
-This structure avoids putting the entire program into one large procedural block.
-
----
-
-# Command Availability Detection
-
-A key part of the implementation is the helper:
+Existe uma função auxiliar:
 
 ```sh
 has_cmd()
 ```
 
-It uses:
+que verifica a existência de comandos utilizando:
 
 ```sh
 command -v
 ```
 
-to determine whether a command exists before attempting to execute it.
-
-Conceptually:
+Conceitualmente:
 
 ```sh
 if has_cmd curl; then
@@ -793,62 +442,82 @@ if has_cmd curl; then
 fi
 ```
 
-This prevents missing optional utilities from unnecessarily terminating the script.
+Isso permite que o programa tente diferentes fontes.
 
-The goal is graceful degradation.
+A estratégia geral é:
+
+```text
+┌──────────────────────┐
+│ Fonte principal      │
+└──────────┬───────────┘
+           ↓
+     disponível?
+      ↙       ↘
+    SIM       NÃO
+     ↓         ↓
+  retorna   fallback
+              ↓
+        outra fonte
+              ↓
+        outra fonte
+              ↓
+             N/A
+```
 
 ---
 
-# Graceful Fallbacks
+# 🧱 Graceful Degradation
 
-Sysinfo Shell does not assume that every environment has exactly the same utilities.
+Se uma determinada informação não puder ser obtida, o programa não deve comprometer o restante do relatório.
 
-Instead, many information collectors follow a fallback strategy.
-
-For example:
+Exemplo:
 
 ```text
-Primary source
-      ↓
-Alternative source
-      ↓
-Secondary fallback
-      ↓
-N/A
-```
-
-This is especially important for cross-platform Shell applications because the available command set can differ considerably between Linux distributions, Git Bash, MSYS2, WSL and Windows environments.
-
----
-
-# Missing Information
-
-When information cannot be retrieved, Sysinfo Shell does not intentionally fail the entire report.
-
-Instead, unavailable information is represented as:
-
-```text
-N/A
-```
-
-For example:
-
-```text
-CPU          : N/A
+CPU          : AMD Ryzen 5
+RAM          : 8GiB / 16GiB
+Disk         : 120GiB / 500GiB
+Local IP     : 192.168.1.20
 Public IP    : N/A
 ```
 
-This allows the remaining system information to continue being displayed.
+Em vez de interromper a execução inteira, a informação indisponível recebe:
+
+```text
+N/A
+```
 
 ---
 
-# Dependencies
+# 📊 Fontes de informação
 
-Sysinfo Shell does not require a package manager or application framework.
+O projeto utiliza diferentes fontes dependendo do sistema.
 
-It relies primarily on standard shell utilities and operating-system interfaces.
+| Informação  | Linux                          | Windows                       |
+| ----------- | ------------------------------ | ----------------------------- |
+| OS          | `uname`                        | `uname`                       |
+| Versão      | `/etc/os-release`              | `wmic` / `systeminfo` / `cmd` |
+| Hostname    | `hostname`                     | `hostname`                    |
+| Usuário     | `whoami`                       | `whoami`                      |
+| Kernel      | `uname -r`                     | `uname -r`                    |
+| Arquitetura | `uname -m`                     | `PROCESSOR_ARCHITECTURE`      |
+| CPU         | `/proc/cpuinfo` / `lscpu`      | `wmic` / env                  |
+| Núcleos     | `nproc` / `/proc/cpuinfo`      | env / `wmic`                  |
+| RAM         | `/proc/meminfo` / `free`       | `wmic` / `systeminfo`         |
+| Disco       | `df`                           | `df` / `wmic`                 |
+| IP local    | `ip` / `hostname` / `ifconfig` | `ipconfig` / `wmic`           |
+| IP público  | `curl` / `wget`                | `curl` / `wget`               |
+| Uptime      | `uptime` / `/proc/uptime`      | ferramentas disponíveis       |
+| Data        | `date`                         | `date`                        |
 
-Depending on the operating system and the information being collected, the script may use utilities such as:
+---
+
+# 📦 Dependências
+
+O projeto não possui framework ou runtime adicional.
+
+Ele utiliza comandos disponíveis no ambiente.
+
+Entre os comandos que podem ser utilizados estão:
 
 ```text
 sh
@@ -879,471 +548,408 @@ ipconfig
 cmd
 ```
 
-Not every command is required on every platform.
+Nem todos são necessários em todas as plataformas.
 
-The script checks for optional commands before using them.
+O sistema verifica comandos opcionais antes de utilizá-los.
 
 ---
 
-# No Root Required
+# 🚀 Instalação
 
-Sysinfo Shell is designed to run as a normal user.
-
-You normally do **not** need:
+## 1. Clone o repositório
 
 ```sh
-sudo
+git clone https://github.com/excanear/Sysinfo-Shell.git
 ```
 
-or administrator privileges.
-
-Simply execute:
+## 2. Entre no projeto
 
 ```sh
-./sysinfo.sh
+cd Sysinfo-Shell
 ```
 
-Some information may naturally be unavailable because of operating-system permissions or environment restrictions.
+## 3. Dê permissão de execução
 
----
+Linux / WSL / MSYS2:
 
-# Security Considerations
-
-Sysinfo Shell is primarily an information-display utility.
-
-It does not attempt to:
-
-* modify system configuration
-* change firewall rules
-* install packages
-* modify users
-* change permissions
-* exploit vulnerabilities
-* scan remote hosts
-* modify network configuration
-* persist itself on the system
-
-The main external interaction is the optional public-IP lookup.
-
----
-
-# Network Privacy
-
-The local IP address is collected locally.
-
-The public IP address requires an external HTTP/HTTPS request.
-
-Therefore:
-
-```text
-Local IP
-└── collected locally
-
-Public IP
-└── obtained through an external service
+```sh
+chmod +x sysinfo.sh
 ```
 
-If operating in a restricted, isolated or privacy-sensitive environment, be aware of this distinction.
-
----
-
-# Performance
-
-Sysinfo Shell is designed to be lightweight.
-
-The script performs a relatively small number of short-lived system queries and exits after generating the report.
-
-It is not intended to be a continuous monitoring platform.
-
-For example, it does **not** currently provide:
-
-```text
-CPU monitoring
-RAM monitoring
-Disk monitoring
-Network monitoring
-Process monitoring
-Historical metrics
-Graphs
-Dashboards
-```
-
-Its purpose is a **quick snapshot**, not continuous telemetry.
-
----
-
-# Use Cases
-
-Sysinfo Shell can be useful for:
-
-### Troubleshooting
-
-Quickly identify:
-
-* OS version
-* kernel
-* CPU
-* memory
-* disk
-* networking
-* uptime
-
----
-
-### Server Administration
-
-When connecting to an unfamiliar server:
+## 4. Execute
 
 ```sh
 ./sysinfo.sh
 ```
 
-provides a quick environmental overview.
-
 ---
 
-### Development
+# ⚡ Execução rápida
 
-Useful when determining:
+Se o repositório já estiver clonado:
 
-```text
-Which OS am I running?
-Which architecture?
-Which kernel?
-How much RAM?
-Which CPU?
-What is my IP?
+```sh
+cd Sysinfo-Shell && chmod +x sysinfo.sh && ./sysinfo.sh
 ```
 
 ---
 
-### Documentation
+# 🪟 Windows
 
-The output can be redirected:
+## Git Bash
+
+Abra o Git Bash:
+
+```sh
+cd /c/caminho/do/projeto
+```
+
+Execute:
+
+```sh
+./sysinfo.sh
+```
+
+Ou:
+
+```sh
+sh sysinfo.sh
+```
+
+---
+
+## MSYS2
+
+Abra o terminal MSYS2:
+
+```sh
+cd /c/caminho/do/projeto
+```
+
+Execute:
+
+```sh
+./sysinfo.sh
+```
+
+---
+
+## WSL
+
+No WSL:
+
+```sh
+git clone https://github.com/excanear/Sysinfo-Shell.git
+cd Sysinfo-Shell
+chmod +x sysinfo.sh
+./sysinfo.sh
+```
+
+O programa deverá identificar o ambiente como:
+
+```text
+Linux (WSL)
+```
+
+---
+
+# 📄 Redirecionamento
+
+Como o relatório é enviado para `stdout`, ele pode ser redirecionado normalmente.
+
+### Salvar em arquivo
 
 ```sh
 ./sysinfo.sh > system-info.txt
 ```
 
-creating a simple text report.
-
----
-
-### Support
-
-Instead of asking a user to manually execute several commands, a support workflow can request the output of:
+### Visualizar e salvar simultaneamente
 
 ```sh
-./sysinfo.sh
+./sysinfo.sh | tee system-info.txt
 ```
 
-and use the resulting snapshot as an initial diagnostic reference.
+### Filtrar uma informação
 
----
-
-### Learning Shell
-
-The project can also serve as a practical example of:
-
-* POSIX Shell
-* functions
-* command detection
-* conditional logic
-* `case`
-* pipelines
-* text processing
-* environment detection
-* platform-specific fallbacks
-* terminal formatting
-* defensive scripting
-
----
-
-# Portability Philosophy
-
-The project follows a simple principle:
-
-> **Use the simplest available mechanism, provide fallbacks, and gracefully handle missing information.**
-
-Rather than assuming that every machine has the same command set, the script adapts to the environment.
-
-This is particularly important for Shell applications because:
-
-```text
-Linux ≠ Git Bash ≠ MSYS2 ≠ WSL
+```sh
+./sysinfo.sh | grep RAM
 ```
 
-even when they provide similar command-line interfaces.
-
 ---
 
-# Why POSIX `sh` Instead of Bash?
+# 🔧 Desenvolvimento
 
-Bash is extremely powerful, but it is not the only Shell implementation.
-
-A project intentionally targeting `/bin/sh` can potentially operate in environments where Bash is unavailable or where `/bin/sh` points to another POSIX-compatible implementation.
-
-Using POSIX-oriented syntax also encourages simpler and more portable shell programming.
-
-Sysinfo Shell therefore avoids Bash-specific language features wherever possible.
-
----
-
-# Project Structure
-
-The repository currently has a deliberately minimal structure:
-
-```text
-Sysinfo-Shell/
-│
-├── sysinfo.sh
-└── README.md
-```
-
-### `sysinfo.sh`
-
-The main executable Shell script.
-
-It contains:
-
-* OS detection
-* system information collectors
-* platform-specific fallbacks
-* terminal formatting
-* program entry point
-
-### `README.md`
-
-Project documentation.
-
----
-
-# Development
-
-Clone the project:
+Clone:
 
 ```sh
 git clone https://github.com/excanear/Sysinfo-Shell.git
 cd Sysinfo-Shell
 ```
 
-Make the script executable:
+Execute:
 
 ```sh
-chmod +x sysinfo.sh
+sh sysinfo.sh
 ```
 
-Run it:
+Durante o desenvolvimento, recomenda-se testar diretamente com:
 
 ```sh
-./sysinfo.sh
+sh -n sysinfo.sh
 ```
+
+para verificar erros básicos de sintaxe.
+
+Também é recomendável testar o comportamento em diferentes shells e ambientes.
 
 ---
 
-# Testing
+# 🧪 Matriz de testes
 
-Because this is a cross-platform Shell project, testing should ideally be performed in multiple environments.
+| Ambiente   | Teste |
+| ---------- | :---: |
+| Ubuntu     |   ✅   |
+| Debian     |   ✅   |
+| Fedora     |   ✅   |
+| Arch       |   ✅   |
+| Kali Linux |   ✅   |
+| WSL        |   ✅   |
+| Git Bash   |   ✅   |
+| MSYS2      |   ✅   |
+| Cygwin     |   ⚠️  |
 
-Recommended test matrix:
-
-| Environment        | Expected    |
-| ------------------ | ----------- |
-| Ubuntu             | Supported   |
-| Debian             | Supported   |
-| Fedora             | Supported   |
-| Arch Linux         | Supported   |
-| Kali Linux         | Supported   |
-| WSL                | Supported   |
-| Git Bash           | Supported   |
-| MSYS2              | Supported   |
-| Other POSIX Shells | Best effort |
-
-The goal is not merely to make the script execute, but to verify that each information field behaves correctly in the target environment.
+O comportamento de determinadas informações pode variar conforme os comandos instalados e permissões disponíveis.
 
 ---
 
-# Testing Checklist
+# 🔐 Segurança
 
-When testing a new version, verify:
+O Sysinfo Shell foi projetado como uma ferramenta **informativa**.
 
-* [ ] Script starts successfully.
-* [ ] OS is detected correctly.
-* [ ] WSL is detected correctly.
-* [ ] Windows environments are detected correctly.
-* [ ] Hostname is displayed.
-* [ ] User is displayed.
-* [ ] Kernel is displayed.
-* [ ] Architecture is displayed.
-* [ ] CPU is displayed.
-* [ ] Core count is displayed.
-* [ ] RAM information is displayed.
-* [ ] Disk information is displayed.
-* [ ] Local IP is displayed.
-* [ ] Public IP works when network access is available.
-* [ ] Public IP gracefully becomes `N/A` when unavailable.
-* [ ] Uptime is displayed.
-* [ ] Date/time is displayed.
-* [ ] Colors work in an interactive terminal.
-* [ ] Colors are suppressed when output is redirected.
-* [ ] Missing commands do not unnecessarily terminate execution.
-* [ ] Long values do not destroy the output layout.
+Ele não realiza:
+
+* exploração de vulnerabilidades;
+* alteração de firewall;
+* alteração de permissões;
+* criação de usuários;
+* alteração de configurações;
+* instalação automática de software;
+* persistência;
+* varredura de hosts remotos.
+
+A principal operação externa é a consulta opcional do endereço IP público.
 
 ---
 
-# Output Redirection
+# 🌍 Privacidade
 
-Because the program writes its report to standard output, it can be combined with normal Shell tools.
-
-Save the output:
-
-```sh
-./sysinfo.sh > system-info.txt
-```
-
-View it:
-
-```sh
-cat system-info.txt
-```
-
-Search it:
-
-```sh
-./sysinfo.sh | grep "RAM"
-```
-
-Store it while displaying it:
-
-```sh
-./sysinfo.sh | tee system-info.txt
-```
-
----
-
-# Automation
-
-The script can also be incorporated into larger Shell workflows.
-
-Example:
-
-```sh
-#!/bin/sh
-
-echo "Collecting system information..."
-
-./sysinfo.sh
-
-echo "Collection complete."
-```
-
-It can also be used as part of diagnostic scripts, provisioning workflows or support procedures.
-
----
-
-# Limitations
-
-Sysinfo Shell intentionally keeps its scope small.
-
-Current limitations include:
-
-* No interactive menu.
-* No command-line options.
-* No JSON output.
-* No CSV output.
-* No persistent database.
-* No historical system metrics.
-* No continuous monitoring.
-* No process listing.
-* No service monitoring.
-* No hardware temperature monitoring.
-* No GPU-specific reporting.
-* No network interface dashboard.
-* Public IP collection requires external network access.
-* Windows functionality depends on the shell environment and available Windows utilities.
-
-These limitations are intentional and help keep the project lightweight.
-
----
-
-# Roadmap
-
-Possible future improvements include:
-
-### CLI
-
-```sh
-sysinfo.sh --help
-sysinfo.sh --version
-sysinfo.sh --network
-sysinfo.sh --hardware
-sysinfo.sh --system
-```
-
-### Output Formats
-
-```sh
-sysinfo.sh --json
-sysinfo.sh --plain
-sysinfo.sh --compact
-```
-
-### Additional Information
-
-Potential future collectors:
-
-* GPU
-* motherboard
-* BIOS/UEFI
-* battery
-* temperature
-* network interfaces
-* DNS
-* gateway
-* logged-in users
-* shell
-* virtualization
-* container environment
-* package manager
-* display server
-* desktop environment
-
-### Monitoring
-
-A future monitoring mode could potentially provide:
+Existe uma diferença importante entre:
 
 ```text
-CPU       ███████░░░ 72%
-RAM       █████░░░░░ 51%
-DISK      ████████░░ 81%
-NETWORK   ↑ 12 MB/s ↓ 48 MB/s
+IP LOCAL
 ```
 
-without changing the lightweight snapshot mode.
+e:
+
+```text
+IP PÚBLICO
+```
+
+O IP local é coletado diretamente da máquina.
+
+O IP público é obtido através de uma requisição externa.
+
+Portanto, ao utilizar a funcionalidade de IP público, o computador precisa acessar um serviço externo.
+
+Em ambientes altamente restritos ou offline, o campo poderá retornar:
+
+```text
+Public IP : N/A
+```
 
 ---
 
-# Contributing
+# 🧠 Casos de uso
 
-Contributions are welcome.
+## 👨‍💻 Desenvolvimento
 
-A good contribution should prioritize:
+Verificar rapidamente o ambiente de desenvolvimento:
 
-1. Portability.
-2. Simplicity.
-3. Reliability.
-4. Readability.
-5. Graceful failure.
-6. Minimal dependencies.
-7. POSIX compatibility where possible.
-
-Before submitting a change, test it on at least one Linux environment and, when the change is platform-specific, the relevant Windows shell environment.
+```text
+Qual SO?
+Qual arquitetura?
+Qual kernel?
+Qual CPU?
+Quanta RAM?
+Qual IP?
+```
 
 ---
 
-## Adding a New Information Collector
+## 🖥️ Administração
 
-A new collector should ideally follow the existing pattern:
+Ao acessar uma máquina pela primeira vez:
+
+```sh
+./sysinfo.sh
+```
+
+é possível obter rapidamente uma visão geral do ambiente.
+
+---
+
+## 🔧 Troubleshooting
+
+Útil para obter informações iniciais antes de investigar um problema.
+
+---
+
+## 🧪 Laboratórios
+
+Pode ser utilizado em:
+
+* laboratórios Linux;
+* máquinas virtuais;
+* ambientes de desenvolvimento;
+* WSL;
+* máquinas de teste;
+* ambientes educacionais.
+
+---
+
+## 📚 Aprendizado
+
+O código também pode ser utilizado como referência para estudar:
+
+* POSIX Shell;
+* funções;
+* `case`;
+* `if`;
+* pipelines;
+* parsing de texto;
+* `/proc`;
+* variáveis de ambiente;
+* detecção de SO;
+* fallback de comandos;
+* ANSI colors;
+* portabilidade.
+
+---
+
+# 🗂️ Estrutura do projeto
+
+```text
+Sysinfo-Shell/
+│
+├── sysinfo.sh
+│
+└── README.md
+```
+
+### `sysinfo.sh`
+
+Implementação completa da ferramenta.
+
+### `README.md`
+
+Documentação do projeto.
+
+---
+
+# 🧭 Roadmap
+
+O projeto pode evoluir mantendo a filosofia de simplicidade.
+
+## CLI
+
+```text
+sysinfo --help
+sysinfo --version
+sysinfo --system
+sysinfo --hardware
+sysinfo --network
+```
+
+---
+
+## Formatos de saída
+
+Possíveis formatos futuros:
+
+```sh
+sysinfo --json
+sysinfo --plain
+sysinfo --compact
+```
+
+---
+
+## Hardware
+
+Possíveis extensões:
+
+```text
+GPU
+BIOS
+Motherboard
+Battery
+Temperature
+Disk health
+```
+
+---
+
+## Rede
+
+Possíveis extensões:
+
+```text
+Gateway
+DNS
+Interfaces
+MAC address
+IPv4
+IPv6
+```
+
+---
+
+## Ambiente
+
+Possíveis extensões:
+
+```text
+Docker
+Podman
+VM
+Container
+Desktop Environment
+Display Server
+Shell
+Package Manager
+```
+
+---
+
+# 🤝 Contribuindo
+
+Contribuições são bem-vindas.
+
+Antes de abrir um Pull Request:
+
+1. Mantenha o código POSIX sempre que possível.
+2. Evite dependências desnecessárias.
+3. Adicione fallbacks quando apropriado.
+4. Não quebre ambientes existentes.
+5. Teste em mais de uma plataforma.
+6. Mantenha funções pequenas e objetivas.
+7. Atualize a documentação quando necessário.
+
+---
+
+# 🧩 Adicionando novas informações
+
+Novos collectors devem seguir uma estrutura semelhante:
 
 ```sh
 get_example() {
@@ -1363,135 +969,128 @@ get_example() {
 }
 ```
 
-Then integrate the collector into the output formatter.
+A função deve:
 
-This keeps the architecture consistent and makes future maintenance easier.
-
----
-
-# Code Quality Principles
-
-When modifying the project, prefer:
-
-### Portable syntax
-
-Use:
-
-```sh
-[ ... ]
-```
-
-instead of Bash-specific:
-
-```bash
-[[ ... ]]
-```
-
-Prefer:
-
-```sh
-case
-```
-
-for platform detection.
-
-Avoid unnecessary dependencies.
+1. Definir um fallback.
+2. Verificar se o comando existe.
+3. Executar silenciosamente quando apropriado.
+4. Validar o resultado.
+5. Retornar `N/A` quando necessário.
+6. Liberar variáveis temporárias.
 
 ---
 
-### Defensive execution
+# 📐 Princípios de desenvolvimento
 
-Commands that may not exist should be checked:
+### 01 — Portabilidade
 
-```sh
-if has_cmd command; then
-    ...
-fi
-```
+Priorize POSIX Shell.
 
----
+### 02 — Simplicidade
 
-### Graceful degradation
+Não introduza uma dependência quando um comando padrão resolver o problema.
 
-If a data source is unavailable:
+### 03 — Fallback
+
+Sempre que possível:
 
 ```text
+Método A
+   ↓
+Método B
+   ↓
+Método C
+   ↓
 N/A
 ```
 
-is preferable to terminating the complete report.
+### 04 — Resiliência
+
+Uma informação indisponível não deve derrubar o programa inteiro.
+
+### 05 — Clareza
+
+O usuário deve entender o resultado imediatamente.
 
 ---
 
-### Keep functions focused
+# ⚠️ Limitações atuais
 
-A function should preferably have one responsibility.
+O projeto atualmente é propositalmente focado em **snapshot de sistema**.
 
-For example:
+Não é:
+
+* um monitor em tempo real;
+* um dashboard;
+* um SIEM;
+* um scanner;
+* uma ferramenta de inventário corporativo;
+* um monitor de processos;
+* uma plataforma de observabilidade.
+
+Ele responde essencialmente:
+
+> **"Como está esta máquina agora?"**
+
+---
+
+# 📈 Possíveis evoluções
+
+Uma evolução natural seria transformar o projeto em uma pequena suíte:
 
 ```text
-get_cpu()
+sysinfo
+│
+├── system
+├── hardware
+├── memory
+├── storage
+├── network
+├── processes
+├── services
+└── report
 ```
 
-should retrieve CPU information rather than also formatting the entire report.
+Mantendo, porém, a característica principal:
+
+> **rápido, simples e portátil.**
 
 ---
 
-# License
+# 📝 Licença
 
-This project is open source.
+Este projeto é distribuído como software open source.
 
-If a formal license file is added to the repository, this section should be updated to reference the exact license and its terms.
-
----
-
-# Disclaimer
-
-Sysinfo Shell is provided for informational and diagnostic purposes.
-
-System information can vary depending on:
-
-* operating system
-* shell environment
-* permissions
-* installed utilities
-* virtualization
-* containerization
-* WSL configuration
-* network connectivity
-
-The tool should therefore be considered a convenience utility rather than an authoritative hardware or operating-system inventory system.
+Caso uma licença formal seja adicionada ao repositório, esta seção deve ser atualizada para refletir exatamente os termos definidos no arquivo `LICENSE`.
 
 ---
 
-# Author
+# 👤 Autor
 
-Developed by **excanear**.
+Desenvolvido por **excanear**.
 
 GitHub:
 
-**https://github.com/excanear**
+https://github.com/excanear
 
-Repository:
+Repositório:
 
-**https://github.com/excanear/Sysinfo-Shell**
-
----
-
-# Project Status
-
-Sysinfo Shell is a lightweight project focused on providing a practical system snapshot through a single POSIX Shell script.
-
-The repository is intentionally minimal, making it easy to inspect, understand, modify and extend.
-
-The current implementation contains the core functionality required for a cross-platform terminal-based system information utility, including OS detection, hardware information, memory, storage, networking, uptime and formatted output.
+https://github.com/excanear/Sysinfo-Shell
 
 ---
 
 <div align="center">
 
-### Built with POSIX Shell
+## `Sysinfo Shell`
 
-**Simple • Portable • Lightweight • Practical**
+**Uma visão rápida do seu sistema.**
+
+<br>
+
+`POSIX Shell` · `Linux` · `Windows` · `WSL`
+
+<br>
+
+⭐ Se o projeto for útil, considere deixar uma estrela no repositório.
 
 </div>

@@ -1,0 +1,2 @@
+# Scripts shell sempre com LF (senão quebram no bash: $'\r')
+*.sh text eol=lf
